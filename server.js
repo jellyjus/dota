@@ -43,30 +43,31 @@ class Server {
             const title = req.query.title || 'Empty title';
             const message = req.query.msg || 'Empty message';
             const data = {
-                "notification": {
-                    "title": "Ералаш",
-                    "body": "Начало в 21:00",
-                    "icon": "https://pp.userapi.com/c10053/g19730218/d_9d52cfdd.jpg",
-                    "click_action": "https://vk.com/feed"
+                notification: {
+                    title: "Ералаш",
+                    body: "Начало в 21:00",
+                    icon: "https://pp.userapi.com/c10053/g19730218/d_9d52cfdd.jpg",
+                    click_action: "https://vk.com/feed"
                 },
-                "to": this.token
+                to: "fMauLQLH9nk:APA91bEJfI0L91MHth5tYHVoHLULjpj66wjQlpFPQbmAX_EGXB9vPz7GvS1B3mdTI9qwj6AmrY-1a7r8OKnYtU570TGkMhLDNKXG0EtTOSEkv2dUPj36RAX_K5Wc4_Vz6xoMPAZPkRLK"
             };
-
-            request.post({
+            const options = {
                 url: 'https://fcm.googleapis.com/fcm/send',
+                method: 'POST',
                 headers: {
-                    'Content-Type' : 'application/json',
                     'Authorization': 'key=AAAAFsZ2MSY:APA91bHoaUlbEJak5Mqnub3rXOsEeU1CNIzD81Jb1nSA3L2Luo0RKTADpUlBR6Iab7egzkdXVcgE0ZKXOzr-MdVH3J0E6B3c_eKLWKttrSlJF21EC3KGItH_pGM350TSIX0a17pEopLb'
                 },
-                form: data
-            }, (err, response, body) => {
+                json: true,
+                body : data
+            };
+
+            request(options, (err, response, body) => {
                 if (err)
-                    return console.log('ERR', err);
+                    return res.end(JSON.stringify(err));
 
-                console.log(body);
-            });
+                res.end(JSON.stringify(body));
+            })
 
-            res.end('ok');
         });
     }
 }
