@@ -18,10 +18,9 @@ class Server {
         this.app.use(bodyParser.urlencoded({extended: false}));
         this.app.use(express.static(__dirname + '/client'));
 
-        this.token = '';
-
         this.createServer();
         this.createRoutes();
+        this.initFirebase();
     }
 
     createServer() {
@@ -33,40 +32,57 @@ class Server {
 
     }
 
+    initFirebase() {
+        this.firebase = require("firebase");
+        const serviceAccount = require(__dirname + "/firebase.json");
+
+        this.firebase.initializeApp({
+            serviceAccount,
+            databaseURL: "https://bets-30943.firebaseio.com"
+        });
+    }
+
     createRoutes() {
         this.app.post('/api/setToken', (req, res) => {
-            this.token = req.body.token;
-            console.log('setToken', this.token)
+            const token = req.body.token;
+            console.log('setToken', token);
+            this.firebase.database().ref(`/${token}`).set(true);
+
         });
 
         this.app.get('/api/send', (req, res) => {
             const title = req.query.title || 'Empty title';
             const message = req.query.msg || 'Empty message';
-            const data = {
-                notification: {
-                    title: "Ералаш",
-                    body: "Начало в 21:00",
-                    icon: "https://pp.userapi.com/c10053/g19730218/d_9d52cfdd.jpg",
-                    click_action: "https://vk.com/feed"
-                },
-                to: "fMauLQLH9nk:APA91bEJfI0L91MHth5tYHVoHLULjpj66wjQlpFPQbmAX_EGXB9vPz7GvS1B3mdTI9qwj6AmrY-1a7r8OKnYtU570TGkMhLDNKXG0EtTOSEkv2dUPj36RAX_K5Wc4_Vz6xoMPAZPkRLK"
-            };
-            const options = {
-                url: 'https://fcm.googleapis.com/fcm/send',
-                method: 'POST',
-                headers: {
-                    'Authorization': 'key=AAAAFsZ2MSY:APA91bHoaUlbEJak5Mqnub3rXOsEeU1CNIzD81Jb1nSA3L2Luo0RKTADpUlBR6Iab7egzkdXVcgE0ZKXOzr-MdVH3J0E6B3c_eKLWKttrSlJF21EC3KGItH_pGM350TSIX0a17pEopLb'
-                },
-                json: true,
-                body : data
-            };
 
-            request(options, (err, response, body) => {
-                if (err)
-                    return res.end(JSON.stringify(err));
+            this.firebase.database().ref('/').once('value')
+            .then(snapshot => {
+                const users = Object.keys(snapshot.val());
+                const data = {
+                    notification: {
+                        title,
+                        body: message,
+                        icon: "https://pp.userapi.com/c10053/g19730218/d_9d52cfdd.jpg",
+                        click_action: "http://scan-sport.com/vilki/"
+                    },
+                    registration_ids: users
+                };
+                const options = {
+                    url: 'https://fcm.googleapis.com/fcm/send',
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'key=AAAAFsZ2MSY:APA91bH95dpY5HC5ndKal5su3T7dqy7WwdkZ3A_Qg5IH4RiwPh225Z_bgyZVmdBbkapRrrdpN7wiGNdR6aedh1q13BzXZE0Zv2WQksOm33vzibflPwZTvr-B0yZrk6yvGsEeZzhFQH_O'
+                    },
+                    json: true,
+                    body : data
+                };
 
-                res.end(JSON.stringify(body));
-            })
+                request(options, (err, response, body) => {
+                    if (err)
+                        return res.end(JSON.stringify(err));
+
+                    res.end(JSON.stringify(body));
+                })
+            });
 
         });
     }
