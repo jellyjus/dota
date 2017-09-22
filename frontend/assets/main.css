@@ -1,0 +1,77 @@
+@font-face {
+    font-family: Adam;
+    src: url(fonts/ADAM.otf);
+}
+
+@font-face {
+    font-family: Biko;
+    src: url(fonts/Biko_Bold.otf);
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Adam;
+    color: white;
+}
+
+h1 {
+    font-size: 8vw;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    filter: blur(5px);
+    transform: scale(1.03);
+    position: fixed;
+    z-index: 5;
+}
+
+.container, .container-fluid {
+    position: relative;
+    z-index: 10;
+}
+
+.container, .container-fluid {
+    height: 100%;
+}
+
+.row-main {
+    flex-grow: 10;
+}
+
+.footer {
+    flex-grow: 1;
+    font-size: 25px;
+    color: #ababab;
+}
+
+.footer span {
+    margin: 0 5px;
+}
+
+.score h1{
+    font-family: Biko;
+    text-shadow: 6px 3px 5px rgba(0, 0, 0, 1);
+}
+
+.team {
+    margin-top: 25px;
+    font-size: 1vw;
+}
+
+.match_type {
+    position: relative;
+    border-bottom: 1px solid white;
+}
+
+.label {
+    width: 100px;
+    height: auto;
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+}

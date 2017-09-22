@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>D</title>
+  <link rel="stylesheet" href="requires/css/shake.css">
+  <link rel="stylesheet" href="requires/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://s3.amazonaws.com/icomoon.io/114779/Socicon/style.css?rd5re8">
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class="video" data-vide-bg="video/ocean"></div>
+  <div class="container-fluid d-flex flex-column">
+    <div class="row row-main">
+      <div class="col-sm-5 d-flex flex-column justify-content-center align-items-center">
+        <img class="shake-slow img-fluid" src=<%=teams ? `teams/${teams[0]}.png` : 'teams/null.png'%>>
+        <h5 class="team">Ramzes666 | NoOne | 9Pasha | LIL | Solo</h5>
+      </div>
+      <div class="col-sm-2 d-flex flex-column justify-content-center align-items-center score ds">
+        <h4 class="match_type">BO3</h4>
+        <h1>2 : 1</h1>
+      </div>
+      <div class="col-sm-5 d-flex flex-column justify-content-center align-items-center">
+          <img class="shake-slow img-fluid" src=<%=teams ? `teams/${teams[1]}.png` : 'teams/null.png'%>>
+        <h5 class="team">Crystallize | Dendi | GeneRaL | RodjER | SoNNeikO</h5>
+      </div>
+    </div>
+    <div class="row footer">
+      <div class="col-sm-4 offset-sm-4 d-flex justify-content-center align-items-center">
+        <span class="socicon socicon-vkontakte"></span>
+        <span class="socicon socicon-twitter"></span>
+        <span class="socicon socicon-youtube"></span>
+        <span class="socicon socicon-facebook"></span>
+        | DOTA2RUHUB
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="requires/js/jquery.vide.min.js"></script>
+</body>
+</html>

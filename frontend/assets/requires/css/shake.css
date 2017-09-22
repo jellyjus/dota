@@ -1,0 +1,45 @@
+/*! * * * * * * * * * * * * * * * * * * * *\
+  CSShake :: shake-slow
+  v1.5.0
+  CSS classes to move your DOM
+  (c) 2015 @elrumordelaluz
+  http://elrumordelaluz.github.io/csshake/
+  Licensed under MIT
+\* * * * * * * * * * * * * * * * * * * * */
+.shake-slow {
+    display: inline-block;
+    transform-origin: center center
+}
+
+.shake-freeze, .shake-constant.shake-constant--hover:hover, .shake-trigger:hover .shake-constant.shake-constant--hover {
+    animation-play-state: paused
+}
+
+.shake-freeze:hover, .shake-trigger:hover .shake-freeze, .shake-slow:hover, .shake-trigger:hover .shake-slow {
+    animation-play-state: running
+}
+
+@keyframes shake-slow {
+    10%, 90% {
+        transform: translate3d(0, -1px, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(0, 2px, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(0, -4px, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(0, 4px, 0);
+    }
+}
+
+.shake-slow, .shake-trigger:hover .shake-slow, .shake-slow.shake-freeze, .shake-slow.shake-constant {
+    animation-name: shake-slow;
+    animation-duration: 30s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite
+}
