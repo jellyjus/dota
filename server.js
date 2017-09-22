@@ -15,6 +15,8 @@ class Server {
         this.app.set('views', __dirname + '/frontend/templates');
         this.app.set('view engine', 'ejs');
 
+        this.teams = require('./teams.json');
+
         this.createRoutes();
         this.createServer();
     }
@@ -29,6 +31,26 @@ class Server {
                 teams
             });
         });
+
+        this.app.get('/favicon.ico', (req, res) => {
+            res.end('ok')
+        });
+
+        this.app.post('/new_match', (req, res) => {
+            const body = req.body;
+        });
+
+        this.app.get('/:url', (req, res) => {
+            this.matches = require('./matches.json');
+            const url = req.params.url;
+            if (this.matches[url]) {
+                let data = this.matches[url];
+                for (let team of data.teams)
+                    data[team] = this.teams[team].join(' | ') || null;
+
+                res.render('index', data)
+            }
+        })
     }
 
     createServer() {
