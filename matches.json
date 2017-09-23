@@ -1,7 +1,14 @@
 {
   "1qw2": {
-    "teams": ["navi", "vp"],
-    "score": [1,2],
+    "id": "1qw2",
+    "teams": [
+      "navi",
+      "vp"
+    ],
+    "score": [
+      2,
+      2
+    ],
     "type": "BO3"
   }
 }

@@ -41,8 +41,7 @@ class Server {
             const url = req.params.url;
             if (this.matches[url]) {
                 let match = this.matches[url];
-                for (let team of match.teams)
-                    match[team] = this.teams[team].join(' | ') || null;
+                match.id = url;
 
                 let file = fs.readFileSync(__dirname + '/frontend/templates/match.html', 'utf8');
                 file += `
@@ -56,14 +55,11 @@ class Server {
                 res.end('NOT FOUND');
         });
 
-        this.app.get('/:url/cp', (req, res) => {
-            this.matches = require('./matches.json');
-            const url = req.params.url;
-            if (this.matches[url]) {
-                res.json(this.matches[url])
-            }
-            else
-                res.end('NOT FOUND');
+        this.app.post('/saveMatch', (req, res) => {
+            const body = req.body;
+            this.matches[body.id] = body;
+            fs.writeFileSync(__dirname + '/matches.json', JSON.stringify(this.matches, null, 2));
+            res.end('ok');
         });
     }
 

@@ -76,3 +76,28 @@ html, body {
     right: 50px;
     bottom: 50px;
 }
+
+.saveMatch-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    z-index: 20;
+    justify-content: center;
+    background-color: #1eb11e;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.01;
+    transition: .2s;
+}
+
+.saveMatch-button:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.saveMatch-button:active {
+    transform: scale(0.95);
+}
+
