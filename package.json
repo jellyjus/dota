@@ -4,7 +4,6 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "ejs-locals": "^1.0.2",
-    "express": "^4.15.4",
-    "vue": "^2.4.4"
+    "express": "^4.15.4"
   }
 }

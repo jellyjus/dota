@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 class Server {
     constructor() {
@@ -39,11 +40,17 @@ class Server {
             this.matches = require('./matches.json');
             const url = req.params.url;
             if (this.matches[url]) {
-                let data = this.matches[url];
-                for (let team of data.teams)
-                    data[team] = this.teams[team].join(' | ') || null;
+                let match = this.matches[url];
+                for (let team of match.teams)
+                    match[team] = this.teams[team].join(' | ') || null;
 
-                res.sendFile(__dirname + '/frontend/templates/match.html')
+                let file = fs.readFileSync(__dirname + '/frontend/templates/match.html', 'utf8');
+                file += `
+                    <script>
+                         Object.assign(app.$data, ${JSON.stringify(match)})
+                    </script>
+                `;
+                res.end(file)
             }
             else
                 res.end('NOT FOUND');
