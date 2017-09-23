@@ -17,10 +17,6 @@ html, body {
     color: white;
 }
 
-h1 {
-    font-size: 8vw;
-}
-
 .video {
     width: 100%;
     height: 100%;
@@ -45,7 +41,7 @@ h1 {
 
 .footer {
     flex-grow: 1;
-    font-size: 25px;
+    font-size: 1.5vw;
     color: #ababab;
 }
 
@@ -53,14 +49,19 @@ h1 {
     margin: 0 5px;
 }
 
-.score h1{
+.score{
     font-family: Biko;
+    font-size: 8vw;
     text-shadow: 6px 3px 5px rgba(0, 0, 0, 1);
 }
 
 .team {
     margin-top: 25px;
     font-size: 1vw;
+}
+
+.img-fluid:hover {
+    cursor: pointer;
 }
 
 .match_type {

@@ -10,18 +10,22 @@
 </head>
 <body>
   <div class="video" data-vide-bg="video/ocean"></div>
-  <div class="container-fluid d-flex flex-column">
+  <div class="container-fluid d-flex flex-column" id="app">
     <div class="row row-main">
       <div class="col-sm-5 d-flex flex-column justify-content-center align-items-center">
-        <img class="shake-slow img-fluid" src=<%=teams ? `teams/${teams[0]}.png` : 'teams/null.png'%>>
+        <img class="shake-slow img-fluid" :src="'teams/' + teams[0] + '.png'" @click="team0Select = true" v-if="!team0Select">
+        <v-select v-if="team0Select" :options="Object.keys(teamsList)" :on-change="function(val) { teams[0] = val; team0Select = false}"></v-select>
         <h5 class="team">Ramzes666 | NoOne | 9Pasha | LIL | Solo</h5>
       </div>
       <div class="col-sm-2 d-flex flex-column justify-content-center align-items-center score ds">
         <h4 class="match_type">BO3</h4>
-        <h1>2 : 1</h1>
+        <div class="score">
+          <span contenteditable="true" @input="update($event, 0)">2</span><span> : </span><span contenteditable="true" @input="update($event, 1)">1</span>
+        </div>
       </div>
       <div class="col-sm-5 d-flex flex-column justify-content-center align-items-center">
-          <img class="shake-slow img-fluid" src=<%=teams ? `teams/${teams[1]}.png` : 'teams/null.png'%>>
+        <img class="shake-slow img-fluid" :src="'teams/' + teams[1] + '.png'" @click="team1Select = true" v-if="!team1Select">
+        <v-select v-if="team1Select" :options="Object.keys(teamsList)" :on-change="function(val) { teams[1] = val; team1Select = false}"></v-select>
         <h5 class="team">Crystallize | Dendi | GeneRaL | RodjER | SoNNeikO</h5>
       </div>
     </div>
@@ -38,5 +42,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="requires/js/jquery.vide.min.js"></script>
+  <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-select@latest"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

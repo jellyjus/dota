@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+    <v-app>
+        <main>
+            <v-container grid-list-md text-xs-center>
+                <v-layout row wrap>
+                    <v-flex xs12>
+                        <v-card dark>
+                            <v-card-text class="px-0"><h3>Создать матч</h3></v-card-text>
+                            <v-layout row wrap>
+                                <v-flex xs6 px-4>
+                                    <v-layout row wrap>
+                                        <v-flex xs10>
+                                            <v-select
+                                                    v-if="teamsList"
+                                                    v-bind:items="Object.keys(teamsList)"
+                                                    v-model="teams[0]"
+                                                    label="Team#1"
+                                                    autocomplete
+                                                    dark
+                                                    box
+                                            ></v-select>
+                                        </v-flex>
+                                        <v-flex xs2>
+                                            <v-select
+                                                    v-bind:items="[0,1,2,3]"
+                                                    v-model="score[0]"
+                                                    label="Points"
+                                                    dark
+                                                    item-value="number"
+                                            ></v-select>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
+                                <v-flex xs6 px-4>
+                                    <v-select
+                                            v-if="teamsList"
+                                            v-bind:items="Object.keys(teamsList)"
+                                            v-model="teams[1]"
+                                            label="Team#2"
+                                            autocomplete
+                                            dark
+                                    ></v-select>
+                                </v-flex>
+                            </v-layout>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </main>
+    </v-app>
+</div>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            teamsList: null,
+            teams:[],
+            score: []
+        },
+        created: async function () {
+            this.teamsList = (await axios.get('/teams.json')).data;
+            console.log(this.teamsList)
+        }
+    })
+</script>
+</body>
+</html>

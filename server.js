@@ -15,19 +15,48 @@ class Server {
         this.app.set('views', __dirname + '/frontend/templates');
         this.app.set('view engine', 'ejs');
 
+        this.teams = require('./teams.json');
+
         this.createRoutes();
         this.createServer();
     }
 
     createRoutes() {
         this.app.get('/', (req, res) => {
-            const query = req.query;
-            console.log(query);
+            res.sendFile(__dirname + '/frontend/templates/index.html')
+        });
 
-            const teams = (query.teams)? query.teams.split(':') : null;
-            res.render("index", {
-                teams
-            });
+        this.app.get('/teams.json', (req, res) => {
+            const teams = require('./teams.json');
+            res.json(teams)
+        });
+
+        this.app.post('/new_match', (req, res) => {
+            const body = req.body;
+        });
+
+        this.app.get('/:url', (req, res) => {
+            this.matches = require('./matches.json');
+            const url = req.params.url;
+            if (this.matches[url]) {
+                let data = this.matches[url];
+                for (let team of data.teams)
+                    data[team] = this.teams[team].join(' | ') || null;
+
+                res.sendFile(__dirname + '/frontend/templates/match.html')
+            }
+            else
+                res.end('NOT FOUND');
+        });
+
+        this.app.get('/:url/cp', (req, res) => {
+            this.matches = require('./matches.json');
+            const url = req.params.url;
+            if (this.matches[url]) {
+                res.json(this.matches[url])
+            }
+            else
+                res.end('NOT FOUND');
         });
     }
 
