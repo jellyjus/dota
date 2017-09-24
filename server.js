@@ -82,7 +82,7 @@ class Server {
     }
 
     createServer() {
-        const port = 8080 || process.env.NODE_PORT;
+        const port = process.env.PORT || 8080;
         this.server = require('http').createServer(this.app);
         this.server.listen(port, () =>
             this.log(`Start listening on localhost:${port}`)
