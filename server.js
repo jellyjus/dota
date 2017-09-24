@@ -13,9 +13,6 @@ class Server {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: false}));
         this.app.use(express.static(__dirname + '/frontend/assets'));
-        this.app.engine('ejs', require('ejs-locals'));
-        this.app.set('views', __dirname + '/frontend/templates');
-        this.app.set('view engine', 'ejs');
 
         this.teams = require('./teams.json');
 
@@ -36,7 +33,7 @@ class Server {
         this.app.get('/:url', (req, res) => {
             this.matches = require('./matches.json');
             const url = req.params.url;
-            this.log('GET', url)
+            this.log('GET', url);
             if (this.matches[url]) {
                 let match = this.matches[url];
                 match.id = url;

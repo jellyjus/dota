@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "ejs-locals": "^1.0.2",
     "express": "^4.15.4"
   }
 }
