@@ -1,14 +1,14 @@
 {
-  "1qw2": {
-    "id": "1qw2",
+  "3ji7": {
+    "id": null,
     "teams": [
-      "navi",
-      "vp"
+      "vp",
+      "navi"
     ],
     "score": [
-      2,
-      2
+      1,
+      1
     ],
-    "type": "BO3"
+    "type": "BO5"
   }
 }

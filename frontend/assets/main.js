@@ -9,31 +9,33 @@ var app = new Vue({
         teamsList: null,
         score: [],
         teams: [null, null],
-        type: null
+        type: 'BO'
     },
     created: async function () {
         this.teamsList = (await axios.get('/teams.json')).data;
     },
     methods:{
         updateScore: function(event, type){
-            this.score[type] = +event.data;
+            this.score[type] = +event.target.innerText;
         },
         updateType: function(event){
             this.type = event.target.innerText;
         },
-        saveMatch: function () {
-            axios.post('/saveMatch', {
-                id: this.id,
-                teams: this.teams,
-                score: this.score,
-                type: this.type
-            })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
+        saveMatch: async function () {
+            const url = (this.id)? '/saveMatch'  :'/createMatch';
+            try {
+                const res = await axios.post(url, {
+                    id: this.id,
+                    teams: this.teams,
+                    score: this.score,
+                    type: this.type
                 });
+                alert('Матч сохранен!');
+                res.data.redirect?  window.location = res.data.redirect : null
+            } catch (e) {
+                alert('Ошибка!');
+                console.log('ERROR', e)
+            }
         }
     }
 });

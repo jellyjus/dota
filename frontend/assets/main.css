@@ -51,8 +51,13 @@ html, body {
 
 .score{
     font-family: Biko;
-    font-size: 8vw;
+    font-size: 7vw;
     text-shadow: 6px 3px 5px rgba(0, 0, 0, 1);
+}
+
+.score-block {
+    display: inline-block;
+    min-width: 20px;
 }
 
 .team {
@@ -67,6 +72,7 @@ html, body {
 .match_type {
     position: relative;
     border-bottom: 1px solid white;
+    min-width: 20%;
 }
 
 .label {
