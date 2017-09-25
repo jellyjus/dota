@@ -4,17 +4,35 @@ var app = new Vue({
     el: '#app',
     data: {
         id: null,
-        team0Select: false,
-        team1Select: false,
+        teamSelect: [false, false],
+        teamSelect0: false,
         teamsList: null,
         score: [],
         teams: [null, null],
-        type: 'BO'
+        type: 'BO',
+        options: []
     },
     created: async function () {
-        this.teamsList = (await axios.get('/teams.json')).data;
+        //this.teamsList = (await axios.get('/teams.json')).data;
     },
     methods:{
+        getTeams: async function(search, loading) {
+            loading(true);
+            this.teamsList = (await this.fetch(`https://api.opendota.com/api/explorer?sql=SELECT * FROM teams WHERE tag ~* '${search}'`)).rows;
+            loading(false)
+        },
+        getOptions: async function (search, loading) {
+            loading(true);
+            this.options = await this.fetch(`https://api.github.com/search/repositories?q=${search}`);
+            console.log(this.options);
+            loading(false);
+
+        },
+        onTeamSelect: function(type, val) {
+            console.log(type, val)
+            this.teams[type] = val.name;
+            this.teamSelect0 = false
+        },
         updateScore: function(event, type){
             this.score[type] = +event.target.innerText;
         },
@@ -36,6 +54,9 @@ var app = new Vue({
                 alert('Ошибка!');
                 console.log('ERROR', e)
             }
+        },
+        fetch: function (url) {
+            return fetch(url).then(res => res.json())
         }
     }
 });

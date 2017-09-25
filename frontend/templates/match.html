@@ -16,9 +16,25 @@
     </div>
     <div class="row row-main">
       <div class="col-sm-5 d-flex flex-column justify-content-center align-items-center">
-        <v-select v-if="team0Select" :options="Object.keys(teamsList)" :on-change="function(val) { teams[0] = val; team0Select = false}"></v-select>
-        <img class="shake-slow img-fluid" :src="'teams/' + teams[0] + '.png'" @click="team0Select = true" v-if="!team0Select">
-        <h5 class="team" v-if="!team0Select && teamsList && teams[0] ">{{teamsList[teams[0]].join(' | ')}}</h5>
+        <!--<v-select
+                :on-change="function(val) {onTeamSelect(0, val)}"
+                :on-search="getTeams"
+                :options="teamsList"
+                placeholder="Search Team"
+                label="name"
+                :debounce="250"
+        >
+        </v-select>-->
+        <v-select
+                :debounce="250"
+                :on-search="getOptions"
+                :options="options"
+                placeholder="Search GitHub Repositories..."
+                label="full_name"
+        >
+        </v-select>
+        <!--<img class="shake-slow img-fluid" :src="'teams/' + teams[0] + '.png'" @click="teamSelect0 = true" v-if="!teamSelect0">
+        &lt;!&ndash;<h5 class="team" v-if="!teamSelect0 && teams[0] ">{{teamsList[teams[0]].join(' | ')}}</h5>&ndash;&gt;-->
       </div>
       <div class="col-sm-2 d-flex flex-column justify-content-center align-items-center score ds">
         <h4 class="match_type" contenteditable="true" @input="updateType($event)" v-if="teamsList" v-once>{{type}}</h4>
@@ -27,9 +43,18 @@
         </div>
       </div>
       <div class="col-sm-5 d-flex flex-column justify-content-center align-items-center">
-        <v-select v-if="team1Select" :options="Object.keys(teamsList)" :on-change="function(val) { teams[1] = val; team1Select = false}"></v-select>
-        <img class="shake-slow img-fluid" :src="'teams/' + teams[1] + '.png'" @click="team1Select = true" v-if="!team1Select">
-        <h5 class="team"  v-if="!team1Select && teamsList && teams[1]">{{teamsList[teams[1]].join(' | ')}}</h5>
+        <v-select
+                v-if="teamSelect[1]"
+                :on-change="function(val) {onTeamSelect(1, val)}"
+                :on-search="getTeams"
+                :options="teamsList"
+                placeholder="Search Team"
+                label="name"
+                :debounce="250"
+        >
+        </v-select>
+        <img class="shake-slow img-fluid" :src="'teams/' + teams[1] + '.png'" @click="teamSelect[1] = true" v-if="!teamSelect[1]">
+        <h5 class="team"  v-if="!teamSelect[1] && teams[1]">{{teamsList[teams[1]].join(' | ')}}</h5>
       </div>
     </div>
     <div class="row footer">
